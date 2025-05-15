@@ -3,9 +3,9 @@ import { CanvasRenderingContext2D, createCanvas, loadImage } from 'canvas'
 import { useRuntimeConfig } from '#imports'
 import { SVGPathData } from 'svg-pathdata'
 import { join, resolve } from 'pathe'
-import sharp from 'sharp'
+import svg2img, { svg2imgOptions } from 'svg2img'
 import { readFile } from 'fs/promises'
-import SHAPES from '~/assets/types/shapes.enum'
+import SHAPES from '@/assets/types/shapes.enum'
 import { existsSync } from 'fs'
 
 const COOLDOWN_MS = 5 * 60 * 1000; // 5 minutes
@@ -155,7 +155,12 @@ export default defineEventHandler(async (event) => {
   // Eyes
   if (eyes) {
     const svgEyesBuffer = await readFile(resolve('assets/images/eyes', `${eyes}.svg`))
-    const pngEyesBuffer = await sharp(svgEyesBuffer).png().toBuffer()
+    const pngEyesBuffer = await new Promise<Buffer>((resolve, reject) => {
+      svg2img(svgEyesBuffer.toString(), { format: 'png' as svg2imgOptions['format'] }, (error, buffer) => {
+        if (error) return reject(error)
+        resolve(buffer)
+      })
+    })
     const eyesImage = await loadImage(pngEyesBuffer)
     const scale = 1.2
     const x = 0
@@ -173,9 +178,14 @@ export default defineEventHandler(async (event) => {
   // Mouth
   if (mouth) {
     const svgMouthBuffer = await readFile(resolve('assets/images/mouth', `${mouth}.svg`))
-    const pngMouthBuffer = await sharp(svgMouthBuffer).png().toBuffer()
+    const pngMouthBuffer = await new Promise<Buffer>((resolve, reject) => {
+      svg2img(svgMouthBuffer.toString(), { format: 'png' as svg2imgOptions['format'] }, (error, buffer) => {
+        if (error) return reject(error)
+        resolve(buffer)
+      })
+    })
     const mouthImage = await loadImage(pngMouthBuffer)
-    
+      
     const scale = 1.2
     const x = 0
     const y = 0
