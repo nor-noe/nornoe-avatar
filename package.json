@@ -27,5 +27,8 @@
   "devDependencies": {
     "@types/svg-path-parser": "^1.1.6",
     "sass-embedded": "^1.88.0"
+  },
+  "overrides": {
+    "oxc-parser": "0.56.5"
   }
 }
