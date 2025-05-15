@@ -1,0 +1,31 @@
+{
+  "name": "nuxt-app",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "dependencies": {
+    "@atproto/api": "^0.15.6",
+    "@nuxt/icon": "1.12.0",
+    "@pinia/nuxt": "^0.11.0",
+    "canvas": "^3.1.0",
+    "dayjs": "^1.11.13",
+    "nuxt": "^3.17.3",
+    "pinia": "^3.0.2",
+    "sharp": "^0.34.1",
+    "svg-path-parser": "^1.1.0",
+    "svg-pathdata": "^7.2.0",
+    "vite-svg-loader": "^5.1.0",
+    "vue": "^3.5.13",
+    "vue-router": "^4.5.1"
+  },
+  "devDependencies": {
+    "@types/svg-path-parser": "^1.1.6",
+    "sass-embedded": "^1.88.0"
+  }
+}
