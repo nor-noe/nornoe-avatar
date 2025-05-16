@@ -16,8 +16,8 @@ export default defineNuxtConfig({
   modules: ['@nuxt/icon', '@pinia/nuxt'],
 
   runtimeConfig: {
-    BSKY_IDENTIFIER: process.env.BSKY_IDENTIFIER,
-    BSKY_PASSWORD: process.env.BSKY_PASSWORD,
-    API_URL: process.env.API_URL,
+    BSKY_IDENTIFIER: process.env.NUXT_BSKY_IDENTIFIER,
+    BSKY_PASSWORD: process.env.NUXT_BSKY_PASSWORD,
+    API_URL: process.env.NUXT_API_URL,
   },
 })
