@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import { useAvatarTransferStore } from '@/stores/useAvatarTransferStore';
 
+useHead({
+  title: 'change nornoe\'s avatar',
+})
+
 const avatarStore = useAvatarTransferStore()
 const avatarParams = computed(() => avatarStore.avatar)
 </script>

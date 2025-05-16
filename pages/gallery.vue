@@ -5,6 +5,10 @@ import relativeTime from 'dayjs/plugin/relativeTime'
 import type { AvatarArchiveResponse, AvatarParams } from '@/types/avatarArchiveResponse'
 import { useAvatarTransferStore } from '@/stores/useAvatarTransferStore'
 
+useHead({
+  title: 'avatar gallery',
+})
+
 dayjs.extend(duration)
 dayjs.extend(relativeTime)
 
