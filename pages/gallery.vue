@@ -61,7 +61,7 @@ function editAvatar(params: AvatarParams ) {
                 <div class="avatar-infos">
                     <div class="avatar-duration">
                         <Icon name="fluent-emoji-high-contrast:timer-clock" size="16"/>
-                        {{ formatDuration(avatar.value.createdAt), index > 0 ? formatDuration(avatars[index - 1].value.createdAt) : undefined }}
+                        {{ formatDuration(avatar.value.createdAt, index > 0 ? avatars[index - 1].value.createdAt : undefined) }}
                     </div>
                     <div class="avatar-edit" @click="editAvatar(avatar.value.meta)">
                         <Icon name="fluent-emoji-high-contrast:pencil" size="16"/>

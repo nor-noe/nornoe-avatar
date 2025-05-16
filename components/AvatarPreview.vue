@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import SHAPES from '@/assets/types/shapes.enum'
+import SHAPES from '@/types/shapes.enum'
 import { eyesMap as EYES, type EyesType } from './SelectedEyes.vue'
 import { mouthMap as MOUTH, type MouthType } from './SelectedMouth.vue'
 import type { AvatarParams } from '@/types/avatarArchiveResponse';
@@ -94,10 +94,9 @@ const updateProfilePic = async () => {
         console.error('Error updating profile', error.value)
         console.log(error)
 
-        if (error.value.statusCode === 429 && error.value.data?.data.secondsRemaining) {
-            console.log('COOLDOWN')
+        if (error.value.data.statusCode === 429 && error.value.data?.data.data.secondsRemaining) {
 
-            const secondsLeft = error.value.data.data.secondsRemaining
+            const secondsLeft = error.value.data.data.data.secondsRemaining
             console.log(`Retry in ${secondsLeft} seconds`)
             onCooldown.value = secondsLeft
 

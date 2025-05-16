@@ -14,5 +14,6 @@ export default defineNuxtConfig({
   runtimeConfig: {
     BSKY_IDENTIFIER: process.env.BSKY_IDENTIFIER,
     BSKY_PASSWORD: process.env.BSKY_PASSWORD,
-  }
+    API_URL: process.env.API_URL,
+  },
 })
