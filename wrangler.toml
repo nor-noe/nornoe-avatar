@@ -2,4 +2,3 @@ name = "nornoe-avatar"
 
 compatibility_date = "2025-05-15"
 compatibility_flags = ["nodejs_compat"]
-pages_build_output_dir = "./.output/public"
