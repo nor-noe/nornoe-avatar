@@ -97,8 +97,8 @@ function editAvatar(params: AvatarParams ) {
     }
     .avatars {
         margin-top: 2rem;
-        display: flex;
-        flex-wrap: wrap;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
         gap: 1rem;
 
         .avatar {
@@ -151,6 +151,20 @@ function editAvatar(params: AvatarParams ) {
 
             &:hover .avatar-infos {
                 display: flex;
+            }
+        }
+
+        @media  (max-width: 768px) {
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 0.5rem;
+
+            .avatar {
+                width: 100px;
+                height: 100px;
+
+                .avatar-infos {
+                    font-size: 0.75rem;
+                }
             }
         }
     }
