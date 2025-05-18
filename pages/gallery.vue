@@ -2,8 +2,9 @@
 import dayjs from 'dayjs'
 import duration from 'dayjs/plugin/duration'
 import relativeTime from 'dayjs/plugin/relativeTime'
-import type { AvatarArchiveResponse, AvatarParams } from '@/types/avatarArchiveResponse'
+import type { AvatarParams } from '@/types/avatarArchiveResponse'
 import { useAvatarTransferStore } from '@/stores/useAvatarTransferStore'
+import { useAvatarArchive } from '@/composables/useAvatarArchive'
 
 useHead({
   title: 'avatar gallery',
@@ -15,14 +16,13 @@ dayjs.extend(relativeTime)
 const router = useRouter()
 const avatarStore = useAvatarTransferStore()
 
-
-const { data, pending, error } = useFetch<AvatarArchiveResponse>('/api/avatarArchive')
-const avatars = computed(() => {
-    if (data.value)
-    return data.value.data.records
-
-    return []
-})
+const {
+  records: avatars,
+  loading,
+  error,
+  loadMore,
+  hasMore,
+} = useAvatarArchive()
 
 function formatDuration(from: string | Date, to: string | Date = new Date()): string {
   const diffMs = dayjs(to).diff(dayjs(from))
@@ -40,12 +40,14 @@ function formatDuration(from: string | Date, to: string | Date = new Date()): st
   return parts.join(' ')
 }
 
-function editAvatar(params: AvatarParams ) {
-    avatarStore.setAvatar(params)
-
-    router.push('/')
+function editAvatar(params: AvatarParams) {
+  avatarStore.setAvatar(params)
+  router.push('/')
 }
+
+const scrollObserver = ref()
 </script>
+
 
 <template>
     <div id="gallery">
@@ -54,8 +56,7 @@ function editAvatar(params: AvatarParams ) {
             back
         </NuxtLink>
         <h1>avatar gallery</h1>
-        <div v-if="pending">Loading...</div>
-        <div v-else-if="error">Error loading avatars</div>
+        <div v-if="error">Error loading avatars</div>
         <div v-else class="avatars">
             <div v-for="(avatar, index) in avatars" :key="avatar.cid" class="avatar">
                 <img
@@ -73,6 +74,11 @@ function editAvatar(params: AvatarParams ) {
                     </div>
                 </div>
             </div>
+            <InfiniteScrollObserver v-if="hasMore" :handler="loadMore" ref="scrollObserver">
+                <div v-if="loading" class="loader">
+                    <Icon name="fluent-emoji-high-contrast:hourglass-not-done" size="32" class="loader-icon"/>
+                </div>
+            </InfiniteScrollObserver>
         </div>
     </div>
 </template>
@@ -168,5 +174,55 @@ function editAvatar(params: AvatarParams ) {
             }
         }
     }
+
+    .loader {
+        width: 160px;
+        height: 160px;
+        background: #ccc;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+
+        @media (max-width: 768px) {
+            width: 100px;
+            height: 100px;
+        }
+
+        .loader-icon {
+            animation: spin 2s ease-in-out infinite;
+        }
+    }
+}
+
+@keyframes spin {
+    0% {
+    transform: rotate(0deg) translateY(0);
+  }
+  5% {
+    transform: rotate(0deg) translateY(-3px);
+  }
+  10% {
+    transform: rotate(0deg) translateY(0);
+  }
+  25% {
+    transform: rotate(180deg) translateY(0);
+  }
+  50% {
+    transform: rotate(180deg) translateY(0);
+  }
+  55% {
+    transform: rotate(180deg) translateY(-3px);
+  }
+  60% {
+    transform: rotate(180deg) translateY(0);
+  }
+  75% {
+    transform: rotate(360deg) translateY(0);
+  }
+  100% {
+    transform: rotate(360deg) translateY(0);
+  }
 }
 </style>
