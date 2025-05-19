@@ -6,7 +6,8 @@
   "tos_uri": "https://avatar.nornoe.net",
   "policy_uri": "https://avatar.nornoe.net",
   "redirect_uris": [
-    "https://avatar.nornoe.net"
+    "https://avatar.nornoe.net",
+    "http://localhost:3000"
   ],
   "scope": "atproto transition:generic",
   "grant_types": [
