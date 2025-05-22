@@ -4,8 +4,7 @@
     "": {
       "name": "nuxt-app",
       "dependencies": {
-        "@atproto/api": "^0.15.8",
-        "@atproto/oauth-client-node": "^0.2.18",
+        "@atproto/api": "^0.13.15",
         "@nuxt/icon": "1.12.0",
         "@pinia/nuxt": "^0.11.0",
         "dayjs": "^1.11.13",
@@ -51,7 +50,7 @@
 
     "@atproto-labs/simple-store-memory": ["@atproto-labs/simple-store-memory@0.1.3", "", { "dependencies": { "@atproto-labs/simple-store": "0.2.0", "lru-cache": "^10.2.0" } }, "sha512-jkitT9+AtU+0b28DoN92iURLaCt/q/q4yX8q6V+9LSwYlUTqKoj/5NFKvF7x6EBuG+gpUdlcycbH7e60gjOhRQ=="],
 
-    "@atproto/api": ["@atproto/api@0.15.8", "", { "dependencies": { "@atproto/common-web": "^0.4.2", "@atproto/lexicon": "^0.4.11", "@atproto/syntax": "^0.4.0", "@atproto/xrpc": "^0.7.0", "await-lock": "^2.2.2", "multiformats": "^9.9.0", "tlds": "^1.234.0", "zod": "^3.23.8" } }, "sha512-PsCgmV4zPjN8VuJMruxqauhn88PuS0b8t2Xsjl4617+bCPpY513jVlxgNH/XExxO7TSVvJM7EzdLY4o3fqh/xQ=="],
+    "@atproto/api": ["@atproto/api@0.13.35", "", { "dependencies": { "@atproto/common-web": "^0.4.0", "@atproto/lexicon": "^0.4.6", "@atproto/syntax": "^0.3.2", "@atproto/xrpc": "^0.6.8", "await-lock": "^2.2.2", "multiformats": "^9.9.0", "tlds": "^1.234.0", "zod": "^3.23.8" } }, "sha512-vsEfBj0C333TLjDppvTdTE0IdKlXuljKSveAeI4PPx/l6eUKNnDTsYxvILtXUVzwUlTDmSRqy5O4Ryh78n1b7g=="],
 
     "@atproto/common-web": ["@atproto/common-web@0.4.2", "", { "dependencies": { "graphemer": "^1.4.0", "multiformats": "^9.9.0", "uint8arrays": "3.0.0", "zod": "^3.23.8" } }, "sha512-vrXwGNoFGogodjQvJDxAeP3QbGtawgZute2ed1XdRO0wMixLk3qewtikZm06H259QDJVu6voKC5mubml+WgQUw=="],
 
@@ -71,9 +70,9 @@
 
     "@atproto/oauth-types": ["@atproto/oauth-types@0.2.7", "", { "dependencies": { "@atproto/jwk": "0.1.5", "zod": "^3.23.8" } }, "sha512-2SlDveiSI0oowC+sfuNd/npV8jw/FhokSS26qyUyldTg1g9ZlhxXUfMP4IZOPeZcVn9EszzQRHs1H9ZJqVQIew=="],
 
-    "@atproto/syntax": ["@atproto/syntax@0.4.0", "", {}, "sha512-b9y5ceHS8YKOfP3mdKmwAx5yVj9294UN7FG2XzP6V5aKUdFazEYRnR9m5n5ZQFKa3GNvz7de9guZCJ/sUTcOAA=="],
+    "@atproto/syntax": ["@atproto/syntax@0.3.4", "", {}, "sha512-8CNmi5DipOLaVeSMPggMe7FCksVag0aO6XZy9WflbduTKM4dFZVCs4686UeMLfGRXX+X966XgwECHoLYrovMMg=="],
 
-    "@atproto/xrpc": ["@atproto/xrpc@0.7.0", "", { "dependencies": { "@atproto/lexicon": "^0.4.11", "zod": "^3.23.8" } }, "sha512-SfhP9dGx2qclaScFDb58Jnrmim5nk4geZXCqg6sB0I/KZhZEkr9iIx1hLCp+sxkIfEsmEJjeWO4B0rjUIJW5cw=="],
+    "@atproto/xrpc": ["@atproto/xrpc@0.6.12", "", { "dependencies": { "@atproto/lexicon": "^0.4.10", "zod": "^3.23.8" } }, "sha512-Ut3iISNLujlmY9Gu8sNU+SPDJDvqlVzWddU8qUr0Yae5oD4SguaUFjjhireMGhQ3M5E0KljQgDbTmnBo1kIZ3w=="],
 
     "@babel/code-frame": ["@babel/code-frame@7.27.1", "", { "dependencies": { "@babel/helper-validator-identifier": "^7.27.1", "js-tokens": "^4.0.0", "picocolors": "^1.1.1" } }, "sha512-cjQ7ZlQ0Mv3b47hABuTevyTuYN4i+loJKGeV9flcCgIK37cCXRh+L1bd3iBHlynerhQ7BhCkn2BPbQUL+rGqFg=="],
 
@@ -1704,6 +1703,12 @@
     "zip-stream": ["zip-stream@6.0.1", "", { "dependencies": { "archiver-utils": "^5.0.0", "compress-commons": "^6.0.2", "readable-stream": "^4.0.0" } }, "sha512-zK7YHHz4ZXpW89AHXUPbQVGKI7uvkd3hzusTdotCg1UxyaVtg0zFJSTfW/Dq5f7OBBVnq6cZIaC8Ti4hb6dtCA=="],
 
     "zod": ["zod@3.24.4", "", {}, "sha512-OdqJE9UDRPwWsrHjLN2F8bPxvwJBK22EHLWtanu0LSYr5YqzsaaW3RMgmjwr8Rypg5k+meEJdSPXJZXE/yqOMg=="],
+
+    "@atproto-labs/identity-resolver/@atproto/syntax": ["@atproto/syntax@0.4.0", "", {}, "sha512-b9y5ceHS8YKOfP3mdKmwAx5yVj9294UN7FG2XzP6V5aKUdFazEYRnR9m5n5ZQFKa3GNvz7de9guZCJ/sUTcOAA=="],
+
+    "@atproto/lexicon/@atproto/syntax": ["@atproto/syntax@0.4.0", "", {}, "sha512-b9y5ceHS8YKOfP3mdKmwAx5yVj9294UN7FG2XzP6V5aKUdFazEYRnR9m5n5ZQFKa3GNvz7de9guZCJ/sUTcOAA=="],
+
+    "@atproto/oauth-client/@atproto/xrpc": ["@atproto/xrpc@0.7.0", "", { "dependencies": { "@atproto/lexicon": "^0.4.11", "zod": "^3.23.8" } }, "sha512-SfhP9dGx2qclaScFDb58Jnrmim5nk4geZXCqg6sB0I/KZhZEkr9iIx1hLCp+sxkIfEsmEJjeWO4B0rjUIJW5cw=="],
 
     "@babel/code-frame/js-tokens": ["js-tokens@4.0.0", "", {}, "sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ=="],
 
