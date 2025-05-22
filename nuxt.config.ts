@@ -10,15 +10,21 @@ export default defineNuxtConfig({
 
   nitro: {
     preset: 'cloudflare-pages',
-    rollupConfig: {
-      external: ['node:console', 'node:process', 'node:timers']
-    }
+
+    node: false,
+
+    externals: {
+      inline: [],
+    },
   },
 
   css: ['@/assets/styles/main.scss'],
 
   vite: {
     plugins: [require('vite-svg-loader')()],
+    esbuild: {
+      target: 'es2020',
+    }
   },
 
   modules: ['@nuxt/icon', '@pinia/nuxt', 'nuxt-auth-utils'],
