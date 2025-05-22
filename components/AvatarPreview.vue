@@ -8,6 +8,9 @@ const props = defineProps<{
     params: AvatarParams | null
 }>()
 
+const { loggedIn, user, clear } = useUserSession()
+const { saveDraft, loadDraft, clearDraft } = useAvatarDraft()
+
 const isLoading = ref(false)
 const isDone = ref(false)
 const onCooldown = ref<boolean | number>(false)
@@ -34,6 +37,25 @@ const backgroundColor = computed(() => {
 const rotation = ref('0')
 const svgRef = ref<SVGSVGElement>()
 
+const userHandle = ref('')
+const isTooltipOpened = ref(false)
+
+onMounted(() => {
+  document.addEventListener('click', () => {
+    if (isTooltipOpened.value) {
+      isTooltipOpened.value = false
+    }
+  })
+})
+
+onUnmounted(() => {
+  document.addEventListener('click', () => {
+    if (isTooltipOpened.value) {
+      isTooltipOpened.value = false
+    }
+  })
+})
+
 
 const faceOffset = computed(() => {
   const intensity = 20
@@ -44,14 +66,16 @@ const faceOffset = computed(() => {
 })
 
 watchEffect(() => {
-    if (props.params) {
-        shapeIndex.value = shapeValues.indexOf(props.params.shape as SHAPES)
-        eyesIndex.value = eyesKeys.indexOf(props.params.eyes as EyesType)
-        mouthIndex.value = mouthKeys.indexOf(props.params.mouth as MouthType)
-        color.value = props.params.color
-        rotation.value = `${props.params.rotation}`
+    const source = props.params ?? loadDraft()
+    if (source) {
+        shapeIndex.value = shapeValues.indexOf(source.shape as SHAPES)
+        eyesIndex.value = eyesKeys.indexOf(source.eyes as EyesType)
+        mouthIndex.value = mouthKeys.indexOf(source.mouth as MouthType)
+        color.value = source.color
+        rotation.value = `${source.rotation}`
     }
 })
+
 
 function isDarkColor(hex: string): boolean {
     const cleaned = hex.replace('#', '')
@@ -115,6 +139,30 @@ const updateProfilePic = async () => {
     }
 
     console.log('Profile updated successfully', data.value)
+}
+
+function handleLogin() {
+    if (!userHandle.value) {
+        return
+    }
+
+
+    saveDraft({
+        background: backgroundColor.value,
+        shape: shapePath.value,
+        eyes: eyesKeys[eyesIndex.value],
+        mouth: mouthKeys[mouthIndex.value],
+        color: color.value,
+        rotation: parseInt(rotation.value),
+        author: null,
+    })
+    
+    navigateTo({
+        path: '/api/auth/bluesky',
+        query: { handle: userHandle.value },
+    }, {
+        external: true,
+    })
 }
 </script>
 
@@ -189,6 +237,31 @@ const updateProfilePic = async () => {
         </div>
         <div class="rotation-input-container">
             <input type="range" min="0" max="360" v-model="rotation" />
+        </div>
+        <div class="login-cta">
+            <div v-if="isTooltipOpened" class="login-info-tooltip">
+                <div class="tooltip-header">
+                    <p class="tooltip-title">This step is optional.</p>
+                    <button class="close-btn" @click="isTooltipOpened = false">
+                        <Icon name="fluent-emoji-high-contrast:cross-mark" size="12"/>
+                    </button>
+                </div>
+                <p>By signing in, your handle will be linked to the avatar you create and shown in the avatar gallery.</p>
+                <p>If you prefer not to sign in, you can still publish your avatar anonymously.</p>
+            </div>
+            <button class="info-btn" @click.stop="isTooltipOpened = !isTooltipOpened">
+                <Icon name="fluent-emoji-high-contrast:white-question-mark" size="20"/>
+            </button>
+            <form v-if="!loggedIn" @submit.prevent="handleLogin">
+                <input type="text" v-model="userHandle" placeholder="alice.bsky.social"/>
+                <button type="submit" class="login-button" :disabled="!userHandle">
+                    <Icon name="fluent-emoji-high-contrast:check-mark" size="20"/>
+                </button>
+            </form>
+            <div v-else>
+                <div v-if="user">Logged as {{ (user as any).bluesky }}</div>
+                <button @click="clear">Logout</button>
+            </div>
         </div>
         <div class="ctas">
             <button class="random-cta" @click="randomize">
@@ -319,7 +392,7 @@ const updateProfilePic = async () => {
 
     .rotation-input-container {
         input[type="range"] {
-            width: 272px;
+            width: 262px;
             height: 8px;
             background: #ddd;
             border-radius: 4px;
@@ -343,8 +416,118 @@ const updateProfilePic = async () => {
         }
     }
 
+    .login-cta {
+        display: flex;
+        width: 100%;
+        position: relative;
+
+        .login-info-tooltip {
+            position: absolute;
+            bottom: 1rem;
+            left: 2.5rem;
+            width: 182px;
+            background-color: #fff;
+            border-radius: 4px;
+            padding: 0.5rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            
+            .tooltip-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 0.5rem;
+            }
+
+
+            .close-btn {
+                background: none;
+                border: none;
+                cursor: pointer;
+                color: #333;
+            }
+
+            .tooltip-title {
+                flex-grow: 1;
+                font-weight: 600;
+                margin-top: 0;
+            }
+
+            p {
+                margin: 0;
+                margin-top: 0.5rem;
+                font-size: 0.8rem;
+                color: #333;
+                text-align: center;
+            }
+        }
+
+        .info-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.25rem;
+            color: #333;
+            transition: all 0.3s ease;
+            width: 40px;
+
+            &:hover {
+                color: #000;
+            }
+        }
+
+        form {
+            display: flex;
+            width: 262px;
+
+            input {
+                flex-grow: 1;
+                height: 43.5px;
+                border: 1px solid #ccc;
+                border-right: 0;
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+                border-radius: 4px 0 0 4px;
+                position: relative;
+                font-size: 1rem;
+                outline: none;
+                box-sizing: border-box;
+                text-align: center;
+                font-family: 'Poppins', sans-serif;
+            }
+            
+            .login-button {
+                background: #333;
+                color: white;
+                border: 2px solid #333;
+                border-radius: 0 4px 4px 0;
+                cursor: pointer;
+                width: 40px;
+
+                &:disabled {
+                    cursor: default;
+                    background: #ccc;
+                    border-color: #ccc;
+                }
+
+                // background: none;
+                // border: none;
+                // cursor: pointer;
+                // padding: 0.25rem;
+                // color: #333;
+                // transition: all 0.3s ease;
+                // width: 40px;
+
+                // &:hover {
+                //     color: #000;
+                // }
+            }
+        }
+    }
+
     .ctas {
-        width: 272px;
+        width: 262px;
         height: 52px;
 
         display: flex;

@@ -4,6 +4,10 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   ssr: false,
 
+  devServer: {
+    host: '127.0.0.1',
+  },
+
   nitro: {
     preset: 'cloudflare-pages'
   },
@@ -14,7 +18,11 @@ export default defineNuxtConfig({
     plugins: [require('vite-svg-loader')()],
   },
 
-  modules: ['@nuxt/icon', '@pinia/nuxt'],
+  modules: ['@nuxt/icon', '@pinia/nuxt', 'nuxt-auth-utils'],
+
+  auth: {
+    atproto: true,
+  },
 
   runtimeConfig: {
     BSKY_IDENTIFIER: process.env.NUXT_BSKY_IDENTIFIER,

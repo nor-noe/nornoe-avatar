@@ -24,6 +24,18 @@ const {
   hasMore,
 } = useAvatarArchive()
 
+const activeAvatarIndex = ref<number | null>(null)
+
+function toggleAvatarInfo(index: number) {
+  // On toggle l'état actif si c'est un mobile (ou si click)
+  if (activeAvatarIndex.value === index) {
+    activeAvatarIndex.value = null
+  } else {
+    activeAvatarIndex.value = index
+  }
+}
+
+
 function formatDuration(from: string | Date, to: string | Date = new Date()): string {
   const diffMs = dayjs(to).diff(dayjs(from))
   const dur = dayjs.duration(diffMs)
@@ -58,18 +70,30 @@ const scrollObserver = ref()
         <h1>avatar gallery</h1>
         <div v-if="error">Error loading avatars</div>
         <div v-else class="avatars">
-            <div v-for="(avatar, index) in avatars" :key="avatar.cid" class="avatar">
+            <div 
+                v-for="(avatar, index) in avatars" 
+                :key="avatar.cid" 
+                class="avatar" 
+                :class="{ 'show-infos': activeAvatarIndex === index }"
+                @click="toggleAvatarInfo(index)"
+            >
                 <img
                     :src="`https://cdn.bsky.app/img/avatar/plain/${avatar.uri.split('/')[2]}/${avatar.value.blob.ref?.ref?.['$link']}@png`"
                     alt="Archived avatar"
                 />
-                <div class="avatar-infos">
+                <div class="avatar-infos" @click.stop>
                     <div class="avatar-duration">
-                        <Icon name="fluent-emoji-high-contrast:timer-clock" size="16"/>
+                        <Icon class="icon" name="fluent-emoji-high-contrast:timer-clock"/>
                         {{ formatDuration(avatar.value.createdAt, index > 0 ? avatars[index - 1].value.createdAt : undefined) }}
                     </div>
+                    <div class="avatar-author" v-if="avatar.value.meta.author">
+                        <Icon class="icon" name="fluent-emoji-high-contrast:bust-in-silhouette"/>
+                        <a :href="`https://bsky.app/profile/${avatar.value.meta.author.handle}`" target="_blank">
+                            {{ avatar.value.meta.author.handle }}
+                        </a>
+                    </div>
                     <div class="avatar-edit" @click="editAvatar(avatar.value.meta)">
-                        <Icon name="fluent-emoji-high-contrast:pencil" size="16"/>
+                        <Icon class="icon" name="fluent-emoji-high-contrast:pencil"/>
                         Edit
                     </div>
                 </div>
@@ -131,7 +155,7 @@ const scrollObserver = ref()
                 padding: 0.5rem;
                 text-align: center;
                 display: none;
-                font-size: 0.8rem;
+                font-size: 0.75rem;
                 font-weight: bold;
                 justify-content: center;
                 align-items: center;
@@ -139,9 +163,25 @@ const scrollObserver = ref()
                 flex-direction: column;
                 gap: 0.5rem;
 
+                .avatar-author {
+                    display: flex;
+                    align-items: center;
+                    gap: 0.25rem;
+                    
+                    a {
+                        color: white;
+                        text-decoration: none;
+                        
+                        &:hover {
+                            text-decoration: underline;
+                        }
+                    }
+                }
+
                 .avatar-duration {
                     display: flex;
                     gap: 0.25rem;
+                    align-items: center;
                 }
 
                 .avatar-edit {
@@ -155,9 +195,17 @@ const scrollObserver = ref()
                 }
             }
 
-            &:hover .avatar-infos {
-                display: flex;
+            @media (min-width: 768px) {
+                 &:hover .avatar-infos {
+                    display: flex;
+                }
             }
+
+             @media  (max-width: 768px) { 
+                &.show-infos .avatar-infos {
+                    display: flex;
+                }
+             }
         }
 
         @media  (max-width: 768px) {
@@ -169,7 +217,7 @@ const scrollObserver = ref()
                 height: 100px;
 
                 .avatar-infos {
-                    font-size: 0.75rem;
+                    font-size: 0.5rem;
                 }
             }
         }
