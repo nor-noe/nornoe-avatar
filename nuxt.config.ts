@@ -9,7 +9,10 @@ export default defineNuxtConfig({
   },
 
   nitro: {
-    preset: 'cloudflare-pages'
+    preset: 'cloudflare-pages',
+    rollupConfig: {
+      external: ['node:console', 'node:process', 'node:timers']
+    }
   },
 
   css: ['@/assets/styles/main.scss'],
