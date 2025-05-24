@@ -14,7 +14,7 @@ export default defineNuxtConfig({
     node: false,
 
     externals: {
-      inline: ['consola'],
+      inline: ['consola', 'multiformats'],
     },
   },
 
