@@ -1,4 +1,10 @@
-export default defineEventHandler(() => {
+// this route serves as a test
+
+export default defineEventHandler(async (event) => {
+
+  const user = await getUserSession(event)
+
+
   console.log('GET /hello called')
-  return { message: 'Hello from Nuxt API!' }
+  return { user }
 })

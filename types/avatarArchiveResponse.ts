@@ -28,6 +28,11 @@ export interface AvatarArchiveResponse {
     };
   }
 
+  export interface AuthorInfo {
+    handle: string;
+    did: string;
+  }
+
   export interface AvatarParams {
     eyes: string;
     color: string;
@@ -35,5 +40,6 @@ export interface AvatarArchiveResponse {
     shape: string;
     rotation: number;
     background: string;
+    author: AuthorInfo | null;
   }
   
