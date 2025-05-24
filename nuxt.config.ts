@@ -9,7 +9,7 @@ export default defineNuxtConfig({
   },
 
   nitro: {
-    preset: 'netlify',
+    preset: 'netlify-edge',
 
     node: false,
 
@@ -18,9 +18,9 @@ export default defineNuxtConfig({
     },
   },
 
-  build: {
-    transpile: ['@atproto/api', '@atproto/oauth-client-node']
-  },
+  // build: {
+  //   transpile: ['@atproto/api', '@atproto/oauth-client-node']
+  // },
 
   css: ['@/assets/styles/main.scss'],
 
@@ -29,16 +29,16 @@ export default defineNuxtConfig({
     esbuild: {
       target: 'es2020',
     },
-    resolve: {
-      alias: {
-        // Specific paths for multiformats 9.9.0
-        'multiformats/cjs/src/bases/base64.js': 'multiformats/src/bases/base64.js',
-        'multiformats/bases/base64': 'multiformats/src/bases/base64.js'
-      }
-    },
-    optimizeDeps: {
-      include: ['@atproto/api', '@atproto/oauth-client-node', 'multiformats']
-    }
+    // resolve: {
+    //   alias: {
+    //     // Specific paths for multiformats 9.9.0
+    //     'multiformats/cjs/src/bases/base64.js': 'multiformats/src/bases/base64.js',
+    //     'multiformats/bases/base64': 'multiformats/src/bases/base64.js'
+    //   }
+    // },
+    // optimizeDeps: {
+    //   include: ['@atproto/api', '@atproto/oauth-client-node', 'multiformats']
+    // }
   },
 
   modules: ['@nuxt/icon', '@pinia/nuxt', 'nuxt-auth-utils'],
