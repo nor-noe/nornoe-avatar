@@ -5,7 +5,7 @@ export default defineNuxtConfig({
   ssr: false,
 
   nitro: {
-    preset: 'cloudflare-pages'
+    preset: 'netlify',
   },
 
   css: ['@/assets/styles/main.scss'],
