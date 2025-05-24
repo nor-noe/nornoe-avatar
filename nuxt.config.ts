@@ -18,9 +18,9 @@ export default defineNuxtConfig({
     },
   },
 
-  // build: {
-  //   transpile: ['@atproto/api', '@atproto/oauth-client-node']
-  // },
+  build: {
+    transpile: ['@atproto/api', '@atproto/oauth-client-node']
+  },
 
   css: ['@/assets/styles/main.scss'],
 
@@ -29,9 +29,9 @@ export default defineNuxtConfig({
     esbuild: {
       target: 'es2020',
     },
-    // optimizeDeps: {
-    //   include: ['@atproto/api', '@atproto/oauth-client-node', 'multiformats']
-    // }
+    optimizeDeps: {
+      include: ['@atproto/api', '@atproto/oauth-client-node', 'multiformats']
+    }
   },
 
   modules: ['@nuxt/icon', '@pinia/nuxt', 'nuxt-auth-utils'],
