@@ -29,6 +29,13 @@ export default defineNuxtConfig({
     esbuild: {
       target: 'es2020',
     },
+    resolve: {
+      alias: {
+        // Specific paths for multiformats 9.9.0
+        'multiformats/cjs/src/bases/base64.js': 'multiformats/src/bases/base64.js',
+        'multiformats/bases/base64': 'multiformats/src/bases/base64.js'
+      }
+    },
     optimizeDeps: {
       include: ['@atproto/api', '@atproto/oauth-client-node', 'multiformats']
     }
