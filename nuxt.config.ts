@@ -18,13 +18,20 @@ export default defineNuxtConfig({
     },
   },
 
+  // build: {
+  //   transpile: ['@atproto/api', '@atproto/oauth-client-node']
+  // },
+
   css: ['@/assets/styles/main.scss'],
 
   vite: {
     plugins: [require('vite-svg-loader')()],
     esbuild: {
       target: 'es2020',
-    }
+    },
+    // optimizeDeps: {
+    //   include: ['@atproto/api', '@atproto/oauth-client-node', 'multiformats']
+    // }
   },
 
   modules: ['@nuxt/icon', '@pinia/nuxt', 'nuxt-auth-utils'],
