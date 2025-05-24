@@ -16,6 +16,7 @@
     "@pinia/nuxt": "^0.11.0",
     "consola": "^3.4.2",
     "dayjs": "^1.11.13",
+    "multiformats": "^13.3.6",
     "nuxt": "^3.17.3",
     "nuxt-auth-utils": "0.5.20",
     "pinia": "^3.0.2",
