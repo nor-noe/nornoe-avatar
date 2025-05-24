@@ -9,7 +9,7 @@ export default defineNuxtConfig({
   },
 
   nitro: {
-    preset: 'cloudflare-pages'
+    preset: 'node-server',
   },
 
   css: ['@/assets/styles/main.scss'],
