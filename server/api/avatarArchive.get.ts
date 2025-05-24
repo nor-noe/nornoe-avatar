@@ -33,7 +33,7 @@ export default defineEventHandler(async (event) => {
 
   const response: AvatarArchiveResponse = {
     data: {
-      records: res.data.records as AvatarRecord[],
+      records: res.data.records as unknown as AvatarRecord[],
       cursor: res.data.cursor ?? '',
     },
     headers: {},
