@@ -258,9 +258,11 @@ function handleLogin() {
                     <Icon name="fluent-emoji-high-contrast:check-mark" size="20"/>
                 </button>
             </form>
-            <div v-else>
-                <div v-if="user">Logged as {{ (user as any).bluesky }}</div>
-                <button @click="clear">Logout</button>
+            <div v-else class="logged-in">
+                <div v-if="user" class="logged-in-container">Logged in</div>
+                <button @click="clear" class="logout-btn">
+                    <Icon name="fluent-emoji-high-contrast:cross-mark" size="20"/>
+                </button>
             </div>
         </div>
         <div class="ctas">
@@ -510,18 +512,35 @@ function handleLogin() {
                     background: #ccc;
                     border-color: #ccc;
                 }
+            }
+        }
 
-                // background: none;
-                // border: none;
-                // cursor: pointer;
-                // padding: 0.25rem;
-                // color: #333;
-                // transition: all 0.3s ease;
-                // width: 40px;
+        .logged-in {
+            display: flex;
+            align-items: center;
+            width: 262px;
 
-                // &:hover {
-                //     color: #000;
-                // }
+            .logged-in-container {
+                flex-grow: 1;
+                height: 43.5px;
+                border: 1px solid #ccc;
+                border-right: 0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border-radius: 4px 0 0 4px;
+                font-size: 1rem;
+                box-sizing: border-box;
+            }
+
+            .logout-btn {
+                background: #333;
+                color: white;
+                border: 2px solid #333;
+                border-radius: 0 4px 4px 0;
+                cursor: pointer;
+                width: 40px;
+                height: 43.5px;
             }
         }
     }
