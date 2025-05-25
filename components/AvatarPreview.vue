@@ -483,7 +483,7 @@ function handleLogin() {
             width: 262px;
 
             input {
-                flex-grow: 1;
+                flex: 1;
                 height: 43.5px;
                 border: 1px solid #ccc;
                 border-right: 0;
@@ -497,6 +497,8 @@ function handleLogin() {
                 box-sizing: border-box;
                 text-align: center;
                 font-family: 'Poppins', sans-serif;
+                // hack to prevent input from being too wide on some phones
+                max-width: 222px;
             }
             
             .login-button {

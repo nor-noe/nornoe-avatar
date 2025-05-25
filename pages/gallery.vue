@@ -86,9 +86,9 @@ const scrollObserver = ref()
                         <Icon class="icon" name="fluent-emoji-high-contrast:timer-clock"/>
                         {{ formatDuration(avatar.value.createdAt, index > 0 ? avatars[index - 1].value.createdAt : undefined) }}
                     </div>
-                    <div class="avatar-author" v-if="avatar.value.meta.author">
+                    <div class="avatar-author" v-if="avatar.value.meta.author?.handle">
                         <Icon class="icon" name="fluent-emoji-high-contrast:bust-in-silhouette"/>
-                        <a :href="`https://bsky.app/profile/${avatar.value.meta.author.handle}`" target="_blank">
+                        <a :href="`https://bsky.app/profile/${avatar.value.meta.author.did}`" target="_blank">
                             {{ avatar.value.meta.author.handle }}
                         </a>
                     </div>
