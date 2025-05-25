@@ -1,14 +1,40 @@
+import { AtpAgent } from "@atproto/api"
+
 export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig()
+  const user = await getUserSession(event)
 
   const body = await readBody(event)
+  let handle = null
 
   const targetUrl = `${config.API_URL}/setAvatar`
+
+  const did = (user.user as any).bluesky
+  if (did) {
+    const agent = new AtpAgent({ service: 'https://public.api.bsky.app' })
+
+    try {
+    const res = await agent.app.bsky.actor.getProfile({
+      actor: did,
+    })
+
+      handle = res.data.handle
+    } catch (err) {
+      console.error(`Failed to resolve handle for DID ${did}:`, err)
+      handle = null
+    }
+  }
 
   try {
     const response = await $fetch(targetUrl, {
       method: 'POST',
-      body,
+      body: {
+        ...body,
+        author: {
+          did: did,
+          handle: handle,
+        },
+      },
     })
 
     return response
