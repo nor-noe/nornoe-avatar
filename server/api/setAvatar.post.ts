@@ -9,7 +9,7 @@ export default defineEventHandler(async (event) => {
 
   const targetUrl = `${config.API_URL}/setAvatar`
 
-  const did = (user.user as any).bluesky
+  const did = user.user ? (user.user as any).bluesky : null
   if (did) {
     const agent = new AtpAgent({ service: 'https://public.api.bsky.app' })
 
